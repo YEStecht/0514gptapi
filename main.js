@@ -5,11 +5,8 @@ const sendBtn = document.getElementById('sendBtn');
 
 // 🟢 시스템 프롬프트 설정 (이 부분을 자유롭게 수정하여 보시면 됩니다)
 const systemPrompt = `
-당신은 친절하고 유쾌한 수학 교사입니다.
-학생의 질문에 쉽고 따뜻하게 답해주세요.
-답을 줄 때는 학생의 기분을 한 번씩 물어봐주세요.
-예를 들어, 수학 문제를 설명할 땐
-직관적이고 구체적인 사례를 들어주세요.
+임신 출산 관련 조언 도우미 챗봇입니다.
+임산부의 고민이나 여러 대화에 대해 친절하게 대답해주세요.
 `;
 
 // 🟡 대화 맥락을 저장하는 배열 (시스템 프롬프트 포함)
@@ -25,7 +22,7 @@ async function fetchGPTResponse() {
       "Authorization": `Bearer ${apiKey}`
     },
     body: JSON.stringify({
-      model: "gpt-4-turbo", //이 부분에서 모델을 바꿔볼 수 있습니다.
+      model: "gpt-3.5-turbo", //이 부분에서 모델을 바꿔볼 수 있습니다.
       messages: conversationHistory,
       temperature: 0.7, //이 부분은 모델의 창의성을 조절하는 부분입니다. 0정답중심, 1자유로운 창의적인 응답
     }),
