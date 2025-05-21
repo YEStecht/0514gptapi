@@ -3,25 +3,25 @@ const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
 const videoMap = {
   pregnancy: {
     // 임신 초기 (0~11주)
-    early: ["http://www.youtube.com/watch?v=dsj-fQgO858", "http://www.youtube.com/watch?v=dsj-fQgO858", "http://www.youtube.com/watch?v=dsj-fQgO858"],
+    early: ["dsj-fQgO858", "K_GwDwvK9Fw", "kGqN3iybYw4"],
     // 임신 중기 (12~27주)
-    mid: ["http://www.youtube.com/watch?v=NKsapPY-oBE", "http://www.youtube.com/watch?v=NKsapPY-oBE", "http://www.youtube.com/watch?v=NKsapPY-oBE"],
+    mid: ["NKsapPY-oBE", "29lxSXewS7k", "j4vhUS7Cn1c"],
     // 임신 후기 (28주~출산)
-    late: ["http://www.youtube.com/watch?v=Gl5r3ruerR8", "http://www.youtube.com/watch?v=Gl5r3ruerR8", "http://www.youtube.com/watch?v=Gl5r3ruerR8"]
+    late: ["Gl5r3ruerR8", "4t2Z0EvlkHo", "UJ5xTgfDq8U"]
   },
   // 출산 관련 영상
-  birth: ["http://www.youtube.com/watch?v=32C_7Xnhr5w", "http://www.youtube.com/watch?v=32C_7Xnhr5w", "http://www.youtube.com/watch?v=32C_7Xnhr5w"],
+  birth: ["32C_7Xnhr5w", "V3fktW5_6zQ", "ALrKhvMPdaA"],
   baby: {
     // 신생아 (0개월)
-    0: ["http://www.youtube.com/watch?v=G4OsvZKkqhA", "http://www.youtube.com/watch?v=G4OsvZKkqhA", "http://www.youtube.com/watch?v=G4OsvZKkqhA"],
+    0: ["G4OsvZKkqhA", "XK90o0dzPhk", "xexLaIPJeC8"],
     // 1개월 아기
-    1: ["http://www.youtube.com/watch?v=5eQNbxxhzP4", "http://www.youtube.com/watch?v=5eQNbxxhzP4", "http://www.youtube.com/watch?v=5eQNbxxhzP4"],
+    1: ["5eQNbxxhzP4", "JL7_FZ3nN14", "zUeO-XEC6fw"],
     // 3개월 아기
-    3: ["http://www.youtube.com/watch?v=jXobEdAgmr0", "http://www.youtube.com/watch?v=jXobEdAgmr0", "http://www.youtube.com/watch?v=jXobEdAgmr0"],
+    3: ["jXobEdAgmr0", "G7ylvTWyqTQ", "nK42Qsk9_m4"],
     // 6개월 아기
-    6: ["http://www.youtube.com/watch?v=2-3ecbnstYY", "http://www.youtube.com/watch?v=2-3ecbnstYY", "http://www.youtube.com/watch?v=2-3ecbnstYY"],
+    6: ["2-3ecbnstYY", "vd3wEUJdXhc", "rE52-7hGUhY"],
     // 12개월 (돌) 아기
-    12: ["http://www.youtube.com/watch?v=BvQA5mAch2A", "http://www.youtube.com/watch?v=BvQA5mAch2A", "http://www.youtube.com/watch?v=BvQA5mAch2A"]
+    12: ["BvQA5mAch2A", "K0BRrb2zEPU", "Ysb4lEfgMRU"]
   }
 };
 
@@ -99,7 +99,7 @@ document.getElementById('adviceForm').addEventListener('submit', async function 
       else videoIds = videoMap.pregnancy.late;
     } else if (dueDate) {
       videoIds = videoMap.birth;
-    } else if (!isNaN(babyAge) && babyAge > 0) {
+    } else if (!isNaN(babyAge) && babyAge >= 0) {
       videoIds = getClosestBabyVideos(babyAge);
     }
 
@@ -111,7 +111,6 @@ document.getElementById('adviceForm').addEventListener('submit', async function 
 
       videoIds.forEach(id => {
         const iframe = document.createElement("iframe");
-        // 유튜브 임베드 URL 형식: https://www.youtube.com/embed/${id}
         iframe.src = `https://www.youtube.com/embed/${id}`;
         iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
         iframe.allowFullscreen = true;
