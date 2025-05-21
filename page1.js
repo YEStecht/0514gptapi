@@ -2,16 +2,25 @@ const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
 
 const videoMap = {
   pregnancy: {
-    early: ["j3tG-R5E2xA", "g8pxOZCnj54", "pY8jaGsEwBQ"],
-    mid: ["lTz9aPZELkA", "Tx6NSkOpwIo", "DFnN8Nz7nbw"],
+    // 임신 초기 (0~11주)
+    early: ["eYwL9-QYjQ8", "j3tG-R5E2xA", "pY8jaGsEwBQ"],
+    // 임신 중기 (12~27주)
+    mid: ["Tx6NSkOpwIo", "lTz9aPZELkA", "DFnN8Nz7nbw"],
+    // 임신 후기 (28주~출산)
     late: ["z6whSkL_BNo", "vQnsx1F3oVo", "lA1GZOrcq30"]
   },
+  // 출산 관련 영상
   birth: ["aQpCtAHKBOc", "IDWifSKKZYk", "8-EiYPdFMYg"],
   baby: {
+    // 신생아 (0개월)
     0: ["vpF4Q-y3rY4", "LUfnKqsJzT0", "gxU6OmBY1U0"],
+    // 1개월 아기
     1: ["gxU6OmBY1U0", "5jUnI3JQyss", "bMpHLv7_IXo"],
+    // 3개월 아기
     3: ["2LM2dJqNya8", "sZCzFeInbNQ", "tIo63KovNdM"],
+    // 6개월 아기
     6: ["3CSTkQUG7H8", "bPNzDbmMyHE", "eq2PX0XSKnE"],
+    // 12개월 (돌) 아기
     12: ["L7Q0H8v3qqA", "I_HrXlyzmPY", "fUNkIl9rTEg"]
   }
 };
@@ -102,7 +111,7 @@ document.getElementById('adviceForm').addEventListener('submit', async function 
 
       videoIds.forEach(id => {
         const iframe = document.createElement("iframe");
-        // 핵심 수정: 유튜브 임베드 URL 형식 변경
+        // 유튜브 임베드 URL 형식: https://www.youtube.com/embed/VIDEO_ID
         iframe.src = `https://www.youtube.com/embed/${id}`;
         iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
         iframe.allowFullscreen = true;
