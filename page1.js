@@ -2,26 +2,17 @@ const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
 
 const videoMap = {
   pregnancy: {
-    // 임신 초기 (0~11주)
-    early: ["dsj-fQgO858", "K_GwDwvK9Fw", "kGqN3iybYw4"],
-    // 임신 중기 (12~27주)
-    mid: ["NKsapPY-oBE", "29lxSXewS7k", "j4vhUS7Cn1c"],
-    // 임신 후기 (28주~출산)
-    late: ["Gl5r3ruerR8", "4t2Z0EvlkHo", "UJ5xTgfDq8U"]
+    early: ["dsj-fQgO858"],
+    mid: ["NKsapPY-oBE"],
+    late: ["Gl5r3ruerR8"]
   },
-  // 출산 관련 영상
-  birth: ["32C_7Xnhr5w", "V3fktW5_6zQ", "ALrKhvMPdaA"],
+  birth: ["32C_7Xnhr5w"],
   baby: {
-    // 신생아 (0개월)
-    0: ["G4OsvZKkqhA", "XK90o0dzPhk", "xexLaIPJeC8"],
-    // 1개월 아기
-    1: ["5eQNbxxhzP4", "JL7_FZ3nN14", "zUeO-XEC6fw"],
-    // 3개월 아기
-    3: ["jXobEdAgmr0", "G7ylvTWyqTQ", "nK42Qsk9_m4"],
-    // 6개월 아기
-    6: ["2-3ecbnstYY", "vd3wEUJdXhc", "rE52-7hGUhY"],
-    // 12개월 (돌) 아기
-    12: ["BvQA5mAch2A", "K0BRrb2zEPU", "Ysb4lEfgMRU"]
+    0: ["G4OsvZKkqhA"],
+    1: ["5eQNbxxhzP4"],
+    3: ["jXobEdAgmr0"],
+    6: ["2-3ecbnstYY"],
+    12: ["BvQA5mAch2A"]
   }
 };
 
@@ -109,18 +100,16 @@ document.getElementById('adviceForm').addEventListener('submit', async function 
       videoContainer.innerHTML = "<h3>관련 영상 추천</h3>";
       resultBox.appendChild(videoContainer);
 
-      videoIds.forEach(id => {
-        const iframe = document.createElement("iframe");
-        iframe.src = `https://www.youtube.com/embed/${id}`;
-        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-        iframe.allowFullscreen = true;
-        iframe.style.marginTop = "1rem";
-        iframe.style.width = "100%";
-        iframe.style.height = "315px";
-        iframe.style.borderRadius = "10px";
-        iframe.style.border = "none";
-        videoContainer.appendChild(iframe);
-      });
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.youtube.com/embed/${videoIds[0]}`;
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+      iframe.allowFullscreen = true;
+      iframe.style.marginTop = "1rem";
+      iframe.style.width = "100%";
+      iframe.style.height = "315px";
+      iframe.style.borderRadius = "10px";
+      iframe.style.border = "none";
+      videoContainer.appendChild(iframe);
     }
 
   } catch (error) {
