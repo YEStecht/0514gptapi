@@ -1,18 +1,19 @@
+/* page1.js */
 const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
 
 const videoMap = {
   pregnancy: {
-    early: ["j3tG-R5E2xA", "g8pxOZCnj54", "pY8jaGsEwBQ"],
-    mid: ["lTz9aPZELkA", "Tx6NSkOpwIo", "DFnN8Nz7nbw"],
-    late: ["z6whSkL_BNo", "vQnsx1F3oVo", "lA1GZOrcq30"]
+    early: ["9NnDBxG_7lA", "XsRwzAVO8Aw", "8n5EEMbG2Ac"],
+    mid: ["Mmn1eJ31rUI", "YJXSG13Pa7g", "Oln3K59qR_o"],
+    late: ["8cnc_Ak6c2g", "0SVu7cLGvHY", "4_H3QBBke9k"]
   },
-  birth: ["aQpCtAHKBOc", "IDWifSKKZYk", "8-EiYPdFMYg"],
+  birth: ["BndN-sykNGs", "e7RQ2R0nQ2M", "W1-HzhGcyRg"],
   baby: {
-    0: ["vpF4Q-y3rY4", "LUfnKqsJzT0", "gxU6OmBY1U0"],
-    1: ["gxU6OmBY1U0", "5jUnI3JQyss", "bMpHLv7_IXo"],
-    3: ["2LM2dJqNya8", "sZCzFeInbNQ", "tIo63KovNdM"],
-    6: ["3CSTkQUG7H8", "bPNzDbmMyHE", "eq2PX0XSKnE"],
-    12: ["L7Q0H8v3qqA", "I_HrXlyzmPY", "fUNkIl9rTEg"]
+    0: ["f5YPyb9rEXo", "XK90o0dzPhk", "WclM4NQqydw"],
+    1: ["NdXH4pRehNk", "JL7_FZ3nN14", "1vWJsnQpqb8"],
+    3: ["vHwTZo0eK_k", "G7ylvTWyqTQ", "Xb9ToM7x9T8"],
+    6: ["k5U4AKCSPTk", "0aM9NE8vI5c", "vd3wEUJdXhc"],
+    12: ["K0BRrb2zEPU", "o2MZApZtYOo", "7W3sDTKuQCE"]
   }
 };
 
