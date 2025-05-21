@@ -3,9 +3,9 @@ const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
 const videoMap = {
   pregnancy: {
     // 임신 초기 (0~11주)
-    early: ["eYwL9-QYjQ8", "j3tG-R5E2xA", "pY8jaGsEwBQ"],
+    early: ["j3tG-R5E2xA", "g8pxOZCnj54", "pY8jaGsEwBQ"],
     // 임신 중기 (12~27주)
-    mid: ["Tx6NSkOpwIo", "lTz9aPZELkA", "DFnN8Nz7nbw"],
+    mid: ["lTz9aPZELkA", "Tx6NSkOpwIo", "DFnN8Nz7nbw"],
     // 임신 후기 (28주~출산)
     late: ["z6whSkL_BNo", "vQnsx1F3oVo", "lA1GZOrcq30"]
   },
@@ -28,7 +28,7 @@ const videoMap = {
 function getClosestBabyVideos(month) {
   const keys = Object.keys(videoMap.baby).map(k => parseInt(k));
   const closest = keys.reduce((prev, curr) =>
-    Math.abs(curr - month) < Mathabs(prev - month) ? curr : prev
+    Math.abs(curr - month) < Math.abs(prev - month) ? curr : prev
   );
   return videoMap.baby[closest];
 }
@@ -111,8 +111,8 @@ document.getElementById('adviceForm').addEventListener('submit', async function 
 
       videoIds.forEach(id => {
         const iframe = document.createElement("iframe");
-        // 유튜브 임베드 URL 형식: https://www.youtube.com/embed/${id}
-        iframe.src = `https://www.youtube.com/embed/$${id}`;
+        // 유튜브 임베드 URL 형식은 'https://www.youtube.com/embed/${id}' 입니다.
+        iframe.src = `https://www.youtube.com/embed/${id}`;
         iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
         iframe.allowFullscreen = true;
         iframe.style.marginTop = "1rem";
