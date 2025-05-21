@@ -1,19 +1,18 @@
-/* page1.js */
 const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
 
 const videoMap = {
   pregnancy: {
-    early: ["9NnDBxG_7lA", "XsRwzAVO8Aw", "8n5EEMbG2Ac"],
-    mid: ["Mmn1eJ31rUI", "YJXSG13Pa7g", "Oln3K59qR_o"],
-    late: ["8cnc_Ak6c2g", "0SVu7cLGvHY", "4_H3QBBke9k"]
+    early: ["j3tG-R5E2xA", "g8pxOZCnj54", "pY8jaGsEwBQ"],
+    mid: ["lTz9aPZELkA", "Tx6NSkOpwIo", "DFnN8Nz7nbw"],
+    late: ["z6whSkL_BNo", "vQnsx1F3oVo", "lA1GZOrcq30"]
   },
-  birth: ["BndN-sykNGs", "e7RQ2R0nQ2M", "W1-HzhGcyRg"],
+  birth: ["aQpCtAHKBOc", "IDWifSKKZYk", "8-EiYPdFMYg"],
   baby: {
-    0: ["f5YPyb9rEXo", "XK90o0dzPhk", "WclM4NQqydw"],
-    1: ["NdXH4pRehNk", "JL7_FZ3nN14", "1vWJsnQpqb8"],
-    3: ["vHwTZo0eK_k", "G7ylvTWyqTQ", "Xb9ToM7x9T8"],
-    6: ["k5U4AKCSPTk", "0aM9NE8vI5c", "vd3wEUJdXhc"],
-    12: ["K0BRrb2zEPU", "o2MZApZtYOo", "7W3sDTKuQCE"]
+    0: ["vpF4Q-y3rY4", "LUfnKqsJzT0", "gxU6OmBY1U0"],
+    1: ["gxU6OmBY1U0", "5jUnI3JQyss", "bMpHLv7_IXo"],
+    3: ["2LM2dJqNya8", "sZCzFeInbNQ", "tIo63KovNdM"],
+    6: ["3CSTkQUG7H8", "bPNzDbmMyHE", "eq2PX0XSKnE"],
+    12: ["L7Q0H8v3qqA", "I_HrXlyzmPY", "fUNkIl9rTEg"]
   }
 };
 
@@ -51,7 +50,7 @@ document.getElementById('adviceForm').addEventListener('submit', async function 
   const conversationHistory = [
     {
       role: "system",
-      content: `너는 임신과 출산, 육아에 대해 친근하고 따뜻하게 조언을 주는 AI 챗봇이야.`
+      content: "너는 임신과 출산, 육아에 대해 친근하고 따뜻하게 조언을 주는 AI 챗봇이야."
     },
     {
       role: "user",
@@ -59,46 +58,64 @@ document.getElementById('adviceForm').addEventListener('submit', async function 
     }
   ];
 
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${apiKey}`
-    },
-    body: JSON.stringify({
-      model: "gpt-3.5-turbo",
-      messages: conversationHistory,
-      temperature: 0.7
-    })
-  });
+  try {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages: conversationHistory,
+        temperature: 0.7
+      })
+    });
 
-  const data = await response.json();
-  const reply = data.choices[0].message.content;
-  const paragraph = document.createElement("p");
-  paragraph.innerHTML = reply.replace(/\n/g, "<br>");
-  resultBox.appendChild(paragraph);
+    if (!response.ok) {
+      throw new Error(`API 호출 오류: ${response.statusText}`);
+    }
 
-  // ▶ 유튜브 영상 삽입
-  let videoIds = [];
-  if (!isNaN(week)) {
-    if (week < 12) videoIds = videoMap.pregnancy.early;
-    else if (week < 28) videoIds = videoMap.pregnancy.mid;
-    else videoIds = videoMap.pregnancy.late;
-  } else if (dueDate) {
-    videoIds = videoMap.birth;
-  } else if (!isNaN(babyAge)) {
-    videoIds = getClosestBabyVideos(babyAge);
+    const data = await response.json();
+    const reply = data.choices[0].message.content;
+    const paragraph = document.createElement("p");
+    paragraph.innerHTML = reply.replace(/\n/g, "<br>");
+    resultBox.appendChild(paragraph);
+
+    // ▶ 유튜브 영상 삽입
+    let videoIds = [];
+    if (!isNaN(week) && week > 0) { // week가 0이 아닐 때만 판단하도록 수정
+      if (week < 12) videoIds = videoMap.pregnancy.early;
+      else if (week < 28) videoIds = videoMap.pregnancy.mid;
+      else videoIds = videoMap.pregnancy.late;
+    } else if (dueDate) {
+      videoIds = videoMap.birth;
+    } else if (!isNaN(babyAge) && babyAge > 0) { // babyAge가 0이 아닐 때만 판단하도록 수정
+      videoIds = getClosestBabyVideos(babyAge);
+    }
+
+    if (videoIds.length > 0) {
+      const videoContainer = document.createElement("div");
+      videoContainer.style.marginTop = "2rem";
+      videoContainer.innerHTML = "<h3>관련 영상 추천</h3>";
+      resultBox.appendChild(videoContainer);
+
+      videoIds.forEach(id => {
+        const iframe = document.createElement("iframe");
+        iframe.src = `https://www.youtube.com/embed/${id}`; // URL 수정
+        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+        iframe.allowFullscreen = true;
+        iframe.style.marginTop = "1rem";
+        iframe.style.width = "100%";
+        iframe.style.height = "315px";
+        iframe.style.borderRadius = "10px";
+        iframe.style.border = "none";
+        videoContainer.appendChild(iframe);
+      });
+    }
+
+  } catch (error) {
+    console.error("오류 발생:", error);
+    resultBox.innerText = `조언을 가져오는 중 오류가 발생했습니다: ${error.message}`;
   }
-
-  videoIds.forEach(id => {
-    const iframe = document.createElement("iframe");
-    iframe.src = `https://www.youtube.com/embed/${id}`;
-    iframe.allowFullscreen = true;
-    iframe.style.marginTop = "1rem";
-    iframe.style.width = "100%";
-    iframe.style.height = "315px";
-    iframe.style.borderRadius = "10px";
-    iframe.style.border = "none";
-    resultBox.appendChild(iframe);
-  });
 });
