@@ -28,7 +28,7 @@ const videoMap = {
 function getClosestBabyVideos(month) {
   const keys = Object.keys(videoMap.baby).map(k => parseInt(k));
   const closest = keys.reduce((prev, curr) =>
-    Math.abs(curr - month) < Math.abs(prev - month) ? curr : prev
+    Math.abs(curr - month) < Mathabs(prev - month) ? curr : prev
   );
   return videoMap.baby[closest];
 }
@@ -111,8 +111,8 @@ document.getElementById('adviceForm').addEventListener('submit', async function 
 
       videoIds.forEach(id => {
         const iframe = document.createElement("iframe");
-        // 유튜브 임베드 URL 형식: https://www.youtube.com/embed/VIDEO_ID
-        iframe.src = `https://www.youtube.com/embed/${id}`;
+        // 유튜브 임베드 URL 형식: https://www.youtube.com/embed/${id}
+        iframe.src = `https://www.youtube.com/embed/$${id}`;
         iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
         iframe.allowFullscreen = true;
         iframe.style.marginTop = "1rem";
