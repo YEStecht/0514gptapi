@@ -84,13 +84,13 @@ document.getElementById('adviceForm').addEventListener('submit', async function 
 
     // ▶ 유튜브 영상 삽입
     let videoIds = [];
-    if (!isNaN(week) && week > 0) { // week가 0이 아닐 때만 판단하도록 수정
+    if (!isNaN(week) && week > 0) {
       if (week < 12) videoIds = videoMap.pregnancy.early;
       else if (week < 28) videoIds = videoMap.pregnancy.mid;
       else videoIds = videoMap.pregnancy.late;
     } else if (dueDate) {
       videoIds = videoMap.birth;
-    } else if (!isNaN(babyAge) && babyAge > 0) { // babyAge가 0이 아닐 때만 판단하도록 수정
+    } else if (!isNaN(babyAge) && babyAge > 0) {
       videoIds = getClosestBabyVideos(babyAge);
     }
 
@@ -102,7 +102,8 @@ document.getElementById('adviceForm').addEventListener('submit', async function 
 
       videoIds.forEach(id => {
         const iframe = document.createElement("iframe");
-        iframe.src = `https://www.youtube.com/embed/${id}`; // URL 수정
+        // 핵심 수정: 유튜브 임베드 URL 형식 변경
+        iframe.src = `https://www.youtube.com/embed/${id}`;
         iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
         iframe.allowFullscreen = true;
         iframe.style.marginTop = "1rem";
