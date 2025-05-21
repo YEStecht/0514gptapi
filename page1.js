@@ -3,7 +3,7 @@ const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
 const videoMap = {
   pregnancy: {
     early: ["dsj-fQgO858"],
-    mid: ["whlSloLe8-A"],
+    mid: ["DL9d9axO82s"],
     late: ["Gl5r3ruerR8"]
   },
   birth: ["32C_7Xnhr5w"],
