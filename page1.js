@@ -18,23 +18,27 @@ const videoMap = {
 
 function getClosestBabyVideos(month) {
   const keys = Object.keys(videoMap.baby).map(k => parseInt(k));
-  const closest = keys.reduce((prev, curr) => Math.abs(curr - month) < Math.abs(prev - month) ? curr : prev);
+  const closest = keys.reduce((prev, curr) =>
+    Math.abs(curr - month) < Math.abs(prev - month) ? curr : prev
+  );
   return videoMap.baby[closest];
 }
 
-document.getElementById('adviceForm').addEventListener('submit', async function(e) {
+document.getElementById('adviceForm').addEventListener('submit', async function (e) {
   e.preventDefault();
 
   const week = parseInt(document.getElementById('pregnancyWeek').value, 10);
   const dueDate = document.getElementById('dueDate').value;
   const babyAge = parseInt(document.getElementById('babyAge').value, 10);
+  const resultBox = document.getElementById('result');
+  resultBox.innerHTML = ""; // 기존 결과 초기화
 
   if (
     (isNaN(week) || week === 0) &&
     (!dueDate || dueDate === '') &&
     (isNaN(babyAge) || babyAge === 0)
   ) {
-    document.getElementById('result').innerHTML = "하나 이상의 정보를 입력해 주세요.";
+    resultBox.innerText = "하나 이상의 정보를 입력해 주세요.";
     return;
   }
 
@@ -69,9 +73,11 @@ document.getElementById('adviceForm').addEventListener('submit', async function(
 
   const data = await response.json();
   const reply = data.choices[0].message.content;
-  const resultBox = document.getElementById('result');
-  resultBox.innerHTML = reply.replace(/\n/g, "<br>");
+  const paragraph = document.createElement("p");
+  paragraph.innerHTML = reply.replace(/\n/g, "<br>");
+  resultBox.appendChild(paragraph);
 
+  // ▶ 유튜브 영상 삽입
   let videoIds = [];
   if (!isNaN(week)) {
     if (week < 12) videoIds = videoMap.pregnancy.early;
@@ -84,6 +90,14 @@ document.getElementById('adviceForm').addEventListener('submit', async function(
   }
 
   videoIds.forEach(id => {
-    resultBox.innerHTML += `<iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>`;
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.youtube.com/embed/${id}`;
+    iframe.allowFullscreen = true;
+    iframe.style.marginTop = "1rem";
+    iframe.style.width = "100%";
+    iframe.style.height = "315px";
+    iframe.style.borderRadius = "10px";
+    iframe.style.border = "none";
+    resultBox.appendChild(iframe);
   });
 });
